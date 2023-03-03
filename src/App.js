@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import logo from './assets/img/logo.png'
+import Perguntas from './components/Perguntas'
 
 
 function App() {
@@ -10,21 +11,29 @@ function App() {
   }
 
   return (
-    <TelaInicial iniciar={iniciar} >
+  <Tela>
+    <LogoOuTopo iniciar={iniciar} >
       <img  src={logo} alt="logo"/>
       <nomeZap>ZapRecall</nomeZap>
       <button onClick={iniciarRecall}>Iniciar Recall!</button>
-    </TelaInicial>
+    </LogoOuTopo>
+    <Perguntas iniciar={iniciar}/>
+  </Tela>
   );
  
 }
 export default App;
-
-const TelaInicial = styled.div`
+const Tela = styled.div`
  width: 375px;
  height: 667px;
  background: #FB6B6B;
  border: 1px solid #DBDBDB;
+ display:flex;
+ flex-direction: column;
+ align-items:center;
+ `;
+
+const LogoOuTopo = styled.div`
  display:flex;
  flex-direction: ${props => props.iniciar ? 'row' : 'column'};
  align-items: ${props => props.iniciar ? 'none': 'center'};
