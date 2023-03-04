@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
+import GlobalStyle from './globalStyles';
 import styled from 'styled-components';
 import logo from './assets/img/logo.png'
-import Perguntas from './components/Perguntas'
-
+import Cards from './components/Cards'
+import Rodape from './components/Rodape'
 
 function App() {
   const [iniciar, setIniciar] = useState(false);
+  const [textoCard,setTextoCard] = useState("");
+  const [abrirPergunta, setabrirPergunta] = useState(false);
+
   function iniciarRecall() {
     setIniciar(true);
   }
+  function mostrarCard() {
+    setabrirPergunta(true);
+    setTextoCard("O que é JSX?");
+  }
 
   return (
+    <>
+    <GlobalStyle />
   <Tela>
     <LogoOuTopo iniciar={iniciar} >
       <img  src={logo} alt="logo"/>
       <nomeZap>ZapRecall</nomeZap>
-      <button onClick={iniciarRecall}>Iniciar Recall!</button>
+      <button data-test="start-btn" onClick={iniciarRecall}>Iniciar Recall!</button>
     </LogoOuTopo>
-    <Perguntas iniciar={iniciar}/>
+    <Cards iniciar={iniciar} 
+           textoCard={textoCard}
+           abrirPergunta={abrirPergunta} 
+           mostrarCard={mostrarCard}/>
+    <Rodape iniciar={iniciar} />
   </Tela>
+  </>
   );
  
 }
