@@ -43,6 +43,7 @@ function Card({question,answer, index}){
     const [errou,setErrou] = useState(false);
     const [quaseErrou, setQuaseErrou] = useState(false);
     const [acertou, setAcertou] = useState(false);
+    const [testeIcon, setTesteIcon] = useState("play-btn");
 
     function mostrarCard() {
         setabrirPergunta(true);
@@ -57,12 +58,14 @@ function Card({question,answer, index}){
         setabrirResposta(false);
         setIcone(icone_erro);
         setErrou(true); 
+        setTesteIcon("no-icon")
     }
     function quasenaoLembrou(){
         setabrirPergunta(false);
         setabrirResposta(false);
         setIcone(icone_quase);
         setQuaseErrou(true);
+        setTesteIcon("partial-icon")
 
     }
 
@@ -71,23 +74,24 @@ function Card({question,answer, index}){
         setabrirResposta(false);
         setIcone(icone_certo);
         setAcertou(true);
+        setTesteIcon("zap-icon")
         
     }
       
     return(abrirPergunta? 
         (abrirResposta? 
-        <CardRecall abrirPergunta={abrirPergunta}>{answer}
-        <Lembretes><CardVermelho onClick={naoLembrou}>Não lembrei</CardVermelho>
-        <CardLaranja onClick={quasenaoLembrou}>Quase não lembrei</CardLaranja>
-        <CardVerde onClick={lembrou} >Zap!</CardVerde>
+        <CardRecall abrirPergunta={abrirPergunta}><span data-test="flashcard-text" >{answer}</span>
+        <Lembretes><CardVermelho  data-test="no-btn" onClick={naoLembrou}>Não lembrei</CardVermelho>
+        <CardLaranja data-test="partial-btn" onClick={quasenaoLembrou}>Quase não lembrei</CardLaranja>
+        <CardVerde data-test="zap-btn" onClick={lembrou} >Zap!</CardVerde>
         </Lembretes>
         </CardRecall>:
         <CardRecall abrirPergunta={abrirPergunta} data-test="flashcard"> 
         <span data-test="flashcard-text">{question}</span> 
-        <img src={seta_virar} alt="seta_virar" onClick={virarCard}/></CardRecall>):
+        <img data-test="turn-btn" src={seta_virar} alt="seta_virar" onClick={virarCard}/></CardRecall>):
         <CardRecall abrirPergunta={abrirPergunta} errou={errou} quaseErrou = {quaseErrou} acertou={acertou} data-test="flashcard"> 
         <span data-test="flashcard-text"> Pergunta {index +1}</span> 
-        <img  data-test="play-btn" src={icone} alt={icone} onClick={mostrarCard}/>
+        <img  data-test={testeIcon} src={icone} alt={icone} onClick={mostrarCard}/>
         </CardRecall>);
 }
 
