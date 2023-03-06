@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 
-function Rodape({iniciar}){
+function Rodape({iniciar, contador,tamanho}){
     return(
-        <RodapeRecall iniciar={iniciar}>0/4 CONCLUÍDOS</RodapeRecall>
+        <RodapeRecall iniciar={iniciar}> {contador}/{tamanho} CONCLUÍDOS</RodapeRecall>
     );
 }
 export default Rodape;

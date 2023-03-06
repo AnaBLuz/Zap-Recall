@@ -5,37 +5,33 @@ import seta_virar from '../assets/img/seta_virar.png'
 import icone_erro from '../assets/img/icone_erro.png'
 import icone_quase from '../assets/img/icone_quase.png'
 import icone_certo from '../assets/img/icone_certo.png'
+import Rodape from './Rodape'
 
-function Cards({iniciar}){
+function Cards({iniciar, cards}){
 
-    const cards = [
-        { question: "O que é JSX?", answer: "Uma extensão da linguagem JavaScript" },
-        { question: "O React é __", answer: "Uma biblioteca JavaScript para construção de interfaces" },
-        { question: "Componentes devem iniciar com __", answer: "Letra maiúscula" },
-        { question: "Podemos colocar __ dentro do JSX", answer: "expressões" },
-        { question: "O ReactDOM nos ajuda __", answer: "Interagindo com a DOM para colocar componentes React na mesma" },
-        { question: "Usamos o npm para __", answer: "Gerenciar os pacotes necessários e suas dependências" },
-        { question: "Usamos props para __", answer: "Passar diferentes informações para componentes" },
-        { question: "Usamos estado (state) para __", answer: "Dizer para o React quais informações quando atualizadas devem renderizar a tela novamente" }
-    ]
-
-
+    const [contador, setContador] = useState(0);
+    const tamanho = cards.length;
     return(  
+    <>
     <CardsRecall iniciar={iniciar}>
         {cards.map((c,index) =>
                     <Card 
                     question = {c.question}
                     answer = {c.answer}
                     index = {index}
+                    contador={contador}
+                    setContador={setContador}
                     
                     />)}
 
-    </CardsRecall>);
+    </CardsRecall>
+    <Rodape iniciar={iniciar} contador={contador} tamanho={tamanho}/> 
+    </>);
 
 }
 export default Cards;
 
-function Card({question,answer, index}){
+function Card({question,answer, index,contador,setContador}){
 
     const [abrirPergunta, setabrirPergunta] = useState(false);
     const [abrirResposta, setabrirResposta] = useState(false);
@@ -44,10 +40,11 @@ function Card({question,answer, index}){
     const [quaseErrou, setQuaseErrou] = useState(false);
     const [acertou, setAcertou] = useState(false);
     const [testeIcon, setTesteIcon] = useState("play-btn");
+    
 
     function mostrarCard() {
         setabrirPergunta(true);
-
+        
         }
     function virarCard(){
         setabrirResposta(true);
@@ -58,14 +55,18 @@ function Card({question,answer, index}){
         setabrirResposta(false);
         setIcone(icone_erro);
         setErrou(true); 
-        setTesteIcon("no-icon")
+        setTesteIcon("no-icon");
+        setContador(contador + 1);
+
+        
     }
     function quasenaoLembrou(){
         setabrirPergunta(false);
         setabrirResposta(false);
         setIcone(icone_quase);
         setQuaseErrou(true);
-        setTesteIcon("partial-icon")
+        setTesteIcon("partial-icon");
+        setContador(contador + 1);
 
     }
 
@@ -74,8 +75,8 @@ function Card({question,answer, index}){
         setabrirResposta(false);
         setIcone(icone_certo);
         setAcertou(true);
-        setTesteIcon("zap-icon")
-        
+        setTesteIcon("zap-icon");
+        setContador(contador + 1);
     }
       
     return(abrirPergunta? 
@@ -120,7 +121,7 @@ font-weight: 700;
 font-size: 16px;
 line-height: 19px;
 color:${props => props.errou ? '#FF3030':(props.quaseErrou ? '#FF922E':props.acertou ? '#2FBE34':'#333333')};
-text-decoration-line:${props => props.errou ? 'line-through':'none'};
+text-decoration-line:${props => props.errou ? 'line-through':(props.quaseErrou ? 'line-through': props.acertou ? 'line-through':'none')};
 padding: 15px;
 display:flex;
 flex-direction:${props => props.abrirPergunta ? 'column':'row'};
