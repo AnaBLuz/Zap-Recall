@@ -7,17 +7,11 @@ import Rodape from './components/Rodape'
 
 function App() {
   const [iniciar, setIniciar] = useState(false);
-  const [textoCard,setTextoCard] = useState("");
-  const [abrirPergunta, setabrirPergunta] = useState(false);
-
+  
   function iniciarRecall() {
     setIniciar(true);
   }
-  function mostrarCard() {
-    setabrirPergunta(true);
-    setTextoCard("O que é JSX?");
-  }
-
+  
   return (
     <>
     <GlobalStyle />
@@ -27,10 +21,7 @@ function App() {
       <nomeZap>ZapRecall</nomeZap>
       <button data-test="start-btn" onClick={iniciarRecall}>Iniciar Recall!</button>
     </LogoOuTopo>
-    <Cards iniciar={iniciar} 
-           textoCard={textoCard}
-           abrirPergunta={abrirPergunta} 
-           mostrarCard={mostrarCard}/>
+    <Cards iniciar={iniciar} />
     <Rodape iniciar={iniciar} />
   </Tela>
   </>
